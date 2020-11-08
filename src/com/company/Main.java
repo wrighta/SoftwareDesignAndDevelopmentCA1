@@ -35,9 +35,14 @@ public class Main {
                 case 1: {
                     // ask the user for the programmer details, then create a programmer object p
                     p = readProgrammer();
-                    // add the programmer object p to the model (ArrayList of programmers)
-                    model.addProgrammer(p);
-                    System.out.println("***** Programmer Added to the Model *****");
+                    // add the programmer object p to the database
+
+                    boolean created = model.addProgrammer(p);
+
+                    if (created) System.out.println("***** Programmer Added to the Database *****");
+                    else
+                        System.out.println("***** Programmer NOT Added to the Database *****");
+
 
                     break;
                 }
