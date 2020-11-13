@@ -39,7 +39,8 @@ public class Main {
 
                     boolean created = model.addProgrammer(p);
 
-                    if (created) System.out.println("***** Programmer Added to the Database *****");
+                    if (created)
+                        System.out.println("***** Programmer Added to the Database *****");
                     else
                         System.out.println("***** Programmer NOT Added to the Database *****");
 
@@ -103,7 +104,7 @@ public class Main {
     // gets the programmers array list from the model and displays it.
     private static void viewProgrammers() {
 
-        // ask the model for the list of programmers
+        // ask the model for the list of programmers, this code has not changed, however as the model is not hooked up to the gateway the ArrayList that is returned here is from the database
         List<Programmer> programmers = model.getProgrammers();
 
         System.out.println("***** Printing All Programmers *****");

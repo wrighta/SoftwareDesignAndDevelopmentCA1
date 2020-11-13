@@ -83,11 +83,10 @@ public class ProgrammerTableGateway {
 
 
         // Called from the Model to get the complete list of programmers from the programmer table in the database
-        public List<Programmer> getProgrammers() throws SQLException {
+        public List<Programmer> getProgrammers()  {
             String query;                   // the SQL query to execute
-            Statement stmt;                 // the java.sql.Statement object used to execute the SQL query
-            ResultSet rs;                   // the java.sql.ResultSet representing the result of SQL query
-            List<Programmer> programmers;   // the java.util.List containing the Programmer objects created for each row
+
+            List<Programmer> programmers = new ArrayList<>(); // the java.util.List containing the Programmer objects created for each row
             // in the result of the query the id of a programmer
 
             String name, email, mobile, skills;
@@ -99,30 +98,38 @@ public class ProgrammerTableGateway {
             // execute an SQL SELECT statement to get a java.util.ResultSet representing
             // the results of the SELECT statement
             query = "SELECT * FROM " + TABLE_NAME;
-            stmt = this.mConnection.createStatement();
-            // rs is a ResultSet object. It contains the rows of data from the database.
-            rs = stmt.executeQuery(query);
+
+            try {
+                Statement stmt;                 // the java.sql.Statement object used to execute the SQL query
+                ResultSet rs;                   // the java.sql.ResultSet representing the result of SQL query
+
+                stmt = this.mConnection.createStatement();
+                // rs is a ResultSet object. It contains the rows of data from the database.
+                rs = stmt.executeQuery(query);
 
 
-            programmers = new ArrayList<Programmer>();
+                // loop through the result set taking out the programmer data from the DB
+                // create a prorgammer object with this data and pop it into an arraylist
+                while (rs.next()) {
+                    id = rs.getInt(COLUMN_ID);
+                    name = rs.getString(COLUMN_NAME);
+                    email = rs.getString(COLUMN_EMAIL);
+                    mobile = rs.getString(COLUMN_MOBILE);
 
-            // loop through the result set taking out the programmer data from the DB
-            // create a prorgammer object with this data and pop it into an arraylist
-            while (rs.next()) {
-                id = rs.getInt(COLUMN_ID);
-                name = rs.getString(COLUMN_NAME);
-                email = rs.getString(COLUMN_EMAIL);
-                mobile = rs.getString(COLUMN_MOBILE);
+                    skills = rs.getString(COLUMN_SKILLS);
+                    salary = rs.getDouble(COLUMN_SALARY);
 
-                skills = rs.getString(COLUMN_SKILLS);
-                salary = rs.getDouble(COLUMN_SALARY);
+                    p = new Programmer(id, name, email, mobile, skills, salary);
+                    programmers.add(p);
+                }
+            }
 
-                p = new Programmer(id, name, email, mobile, skills, salary);
-                programmers.add(p);
+            catch (SQLException e){
+                Logger.getLogger(Model.class.getName()).log(Level.SEVERE, "SQL Exception in ProgrammerTableGateway : getProgrammers(), Check the SQL you have created to see where your error is", e);
             }
 
             // return the arraylist of Programmer objects to the model.
             return programmers;
         }
 
-    }
+        }
