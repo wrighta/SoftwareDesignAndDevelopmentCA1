@@ -132,4 +132,44 @@ public class ProgrammerTableGateway {
             return programmers;
         }
 
+
+    public boolean deleteProgrammer(int id)    {
+
+        int numRowsAffected;
+
+
+
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "= ?";
+
+
+        try {
+            PreparedStatement stmt;         // the java.sql.PreparedStatement object used to execute the SQL query
+
+            // create a PreparedStatement object to execute the delete, insert the id into the ? in the prepared statement
+            stmt = mConnection.prepareStatement(query);
+            stmt.setInt(1, id);
+
+            // Test to see if the Query string is correct. This can be deleted from the final submission, it's here to show you how to print out your SQL so you can manually check it.
+            System.out.println("\n\nTHE SQL LOOKS LIKE THIS " + stmt.toString() + "\n\n");
+
+            //  execute the query and make sure that one and only one row was inserted into the database
+            numRowsAffected = stmt.executeUpdate();
+            // if a row was affected in the database - the row was deleted, so return true
+            if (numRowsAffected == 1) {
+                return true;
+            }
         }
+        catch (SQLException e)
+        {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, "SQL Exception in ProgrammerTableGateway : deleteProgrammer(), Check the SQL you have created to see where your error is", e);
+        }
+
+
+        // if you get to here the programmer was not deleted so return false
+        return false;
+
+
+    }
+
+
+}

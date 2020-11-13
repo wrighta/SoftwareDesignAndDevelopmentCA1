@@ -78,8 +78,13 @@ public class Model {
     public boolean addProgrammer(Programmer p) {
         return (gateway.insertProgrammer(p));
 
-
     }
+
+    public boolean deleteProgrammer(int id)
+    {
+        return (gateway.deleteProgrammer(id));
+    }
+
 
 
 }

@@ -20,6 +20,7 @@ public class Main {
             System.out.println("\n\n********* MAIN MENU ********");
             System.out.println("1. Create new Programmer");
             System.out.println("2. View all Programmers");
+            System.out.println("3. Delete a Programmer By ID");
             System.out.println("5. Exit");
             System.out.println();
 
@@ -54,11 +55,16 @@ public class Main {
                     viewProgrammers();
                     break;
                 }
+
+                case 3: {
+                    deleteProgrammer();
+                }
             }
         }
         while (opt != 5);
         System.out.println("Goodbye");
     }
+
 
     // reads the details from the user, creates a Programmer object and returns this object to the calling program
     private static Programmer readProgrammer() {
@@ -115,4 +121,20 @@ public class Main {
 
         System.out.println("***** Finished Printing All Programmers *****");
     }
+
+    private static void deleteProgrammer() {
+        System.out.print("Enter the ID of the programmer to delete:");
+        int id = Integer.parseInt(keyboard.nextLine());
+
+        // tip for extra functionality - maybe you want to got the the database retrieve the programmer,
+        // display it to the user and ask "Is this the programmer you want to delete?
+        // if they say - Yes then delete the programmer if they say no .. do something else
+        if (model.deleteProgrammer(id)) {
+            System.out.println("\nProgrammer deleted");
+        }
+        else {
+            System.out.println("\nProgrammer not deleted, check your database to see if a programmer with this ID actually exists");
+        }
+    }
+
 }
