@@ -69,7 +69,7 @@ public class Model {
 
     // returns the array list of programmers to the calling program.
     public List<Programmer> getProgrammers() {
-        return new ArrayList<>(this.programmers);
+        return gateway.getProgrammers();
     }
 
     // adds the programmer object that is passed in to the array list - note this is temporary while the program is running.
